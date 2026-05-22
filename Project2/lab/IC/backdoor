@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "Backdoor triggered" > /shared/success.txt
+date >> /shared/success.txt
