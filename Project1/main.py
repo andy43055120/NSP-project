@@ -1,8 +1,7 @@
 import json
 import os
 
-from scanner.hash_scanner import calculate_sha256
-from scanner.pattern_scanner import scan_hex_pattern
+from scanner.pattern_scanner import scan_hex_pattern, scan_sha256_pattern
 from scanner.heuristic import heuristic_scan
 from scanner.report import generate_report
 
@@ -13,30 +12,20 @@ def load_signatures(path):
 
 
 def scan_directory(target_dir, signatures):
-    sha256_signatures = {
-        sig["signature"]: sig
-        for sig in signatures
-        if sig["type"] == "SHA256"
-    }
-
     results = []
-
     for root, dirs, files in os.walk(target_dir):
         for filename in files:
             filepath = os.path.join(root, filename)
-            file_hash = calculate_sha256(filepath)
-
-            if file_hash in sha256_signatures:
-                matched = sha256_signatures[file_hash]
+            hash_results = scan_sha256_pattern(filepath, signatures)
+            for h in hash_results:
                 results.append({
                     "path": filepath,
-                    "threat": matched["name"],
-                    "severity": matched["severity"],
-                    "method": "SHA256"
+                    "threat": h["threat"],
+                    "severity": h["severity"],
+                    "method": h["method"]
                 })
 
             hex_results = scan_hex_pattern(filepath, signatures)
-
             for h in hex_results:
                 results.append({
                     "path": filepath,
@@ -46,7 +35,6 @@ def scan_directory(target_dir, signatures):
                 })
 
             heuristic_results = heuristic_scan(filepath)
-
             for h in heuristic_results:
                 results.append({
                     "path": filepath,

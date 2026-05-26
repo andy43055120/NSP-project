@@ -1,8 +1,12 @@
 from datetime import datetime
-
+import os
 
 def generate_report(results, output_file="logs/scan_report.txt"):
-    with open(output_file, "w") as f:
+    dir_name = os.path.dirname(output_file)
+    if dir_name and not os.path.exists(dir_name):
+        os.makedirs(dir_name)
+
+    with open(output_file, "a") as f:
 
         f.write("=== Sentinel Scan Report ===\n")
         f.write(
