@@ -74,3 +74,32 @@ Threats found:
 'severity':'Low',
 'method':'SHA256'}
 ```
+
+
+# Project: APT Agent
+
+## Run
+Build:
+```bash
+cd lab
+docker build -t ic_image ./IC #docker image
+ ./docker.sh 3 # Create Docker containers for different project
+./docker_ec.sh # Create EC and login
+```
+
+Run:
+```bash
+#in EC
+./grader.sh
+```
+
+## Example Output
+```text
+root@43b6fac13473:/# ./grader.sh
+[*] Round 1 start
+[+] Exploit successful! Grading ends.
+[*] Grading done
+Total time: 1 seconds
+root@43b6fac13473:/# ls /shared/
+blogic  config.data  coredump  success.txt  triage_hint.txt
+```
