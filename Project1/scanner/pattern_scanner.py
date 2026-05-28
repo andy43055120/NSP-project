@@ -26,9 +26,11 @@ def scan_sha256_pattern(filepath, signatures):
         if sig["type"] == "SHA256"
     }
     results = []
-    file_hash = ""
+    sha256 = hashlib.sha256()
     with open(filepath, "rb") as f:
-        file_hash = hashlib.file_digest(f, "sha256")
+        while chunk := f.read(4096):
+            sha256.update(chunk)
+    file_hash = sha256.hexdigest()
     if file_hash in sha256_signatures:
         matched = sha256_signatures[file_hash]
         results.append({

@@ -13,35 +13,29 @@ def load_signatures(path):
 
 def scan_directory(target_dir, signatures):
     results = []
+
     for root, dirs, files in os.walk(target_dir):
         for filename in files:
+
             filepath = os.path.join(root, filename)
-            hash_results = scan_sha256_pattern(filepath, signatures)
-            for h in hash_results:
-                results.append({
-                    "path": filepath,
-                    "threat": h["threat"],
-                    "severity": h["severity"],
-                    "method": h["method"]
-                })
 
-            hex_results = scan_hex_pattern(filepath, signatures)
-            for h in hex_results:
-                results.append({
-                    "path": filepath,
-                    "threat": h["threat"],
-                    "severity": h["severity"],
-                    "method": h["method"]
-                })
+            all_results = []
 
-            heuristic_results = heuristic_scan(filepath)
-            for h in heuristic_results:
-                results.append({
-                    "path": filepath,
-                    "threat": h["threat"],
-                    "severity": h["severity"],
-                    "method": h["method"]
-                })
+            all_results.extend(
+                scan_sha256_pattern(filepath, signatures)
+            )
+
+            all_results.extend(
+                scan_hex_pattern(filepath, signatures)
+            )
+
+            all_results.extend(
+                heuristic_scan(filepath)
+            )
+
+            for result in all_results:
+                result["path"] = filepath
+                results.append(result)
 
     return results
 

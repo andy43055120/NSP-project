@@ -18,14 +18,20 @@ def generate_report(results, output_file="logs/scan_report.txt"):
             return
 
         for r in results:
-            f.write(
-                f"""
-Path: {r['path']}
-Threat: {r['threat']}
-Severity: {r['severity']}
-Method: {r['method']}
------------------------------------
-"""
-            )
+            f.write(f"Path: {r['path']}\n")
+            f.write(f"Threat: {r['threat']}\n")
+            f.write(f"Severity: {r['severity']}\n")
+            f.write(f"Method: {r['method']}\n")
+
+            if "score" in r:
+                f.write(f"Score: {r['score']}\n")
+
+            if "reasons" in r:
+                f.write("Reasons:\n")
+                for reason in r["reasons"]:
+                    f.write(f"  - {reason}\n")
+
+            f.write("-----------------------------------\n")
+
 
     print(f"\nReport saved to: {output_file}")
