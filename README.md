@@ -95,11 +95,10 @@ Run:
 
 ## Example Output
 ```text
-root@43b6fac13473:/# ./grader.sh
+root@daddcfd4cdbe:/# ./grader.sh
 [*] Round 1 start
+[*] Round 2 start
 [+] Exploit successful! Grading ends.
 [*] Grading done
-Total time: 1 seconds
-root@43b6fac13473:/# ls /shared/
-blogic  config.data  coredump  success.txt  triage_hint.txt
+Total time: 2 seconds
 ```
