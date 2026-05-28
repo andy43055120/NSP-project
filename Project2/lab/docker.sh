@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PHASE=${1:-1}  
+PHASE=${1:-3}  
 
 IMAGE_NAME="ic_image"
 CONTAINER_NAME="IC_PHASE${PHASE}"

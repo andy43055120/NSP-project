@@ -1,2 +1,0 @@
-rip=0x7d1cfa5a843b
-padding=0x68
