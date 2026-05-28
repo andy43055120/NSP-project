@@ -27,7 +27,7 @@ void execute_task() {
 
 void log_message(const char *msg, size_t len) {
     char buf[96];
-    memcpy(buf, msg, len); 
+    memcpy(buf, msg, len);
 }
 
 void parse_config() {
